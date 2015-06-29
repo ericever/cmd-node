@@ -1,0 +1,112 @@
+#!/usr/bin/env node
+'use strict';
+
+process.bin = process.title = "kai";
+var program = require("commander");
+
+
+
+//这个里面列出的东西会被现实在help 帮助手册里
+/***
+ Usage: cmd-1 [option],[arguments]
+
+
+  Commands:
+
+    install [name]       install a package
+    search [path] [key]  search a file
+    help [cmd]           display help for [cmd]
+
+  this is a programmer for generate a standard skeleton
+
+  Options:
+
+    -h, --help     output usage information
+    -V, --version  output the version number
+    -c,--china     chinese
+    -a,--USA       American
+    -g,--german    germany
+**/
+/***
+API 解析
+Command#parse(): 解析命令行参数argv
+Command#description(): 设置description值
+Command#usage(): 设置usage值
+
+Command#action(): 注册一个callback函数  //------------------***********
+
+Command#option(): 定义参数，需要设置“关键字”和“描述”，关键字包括“简写”和“全写”两部分，以”,”,”|”,”空格”做分隔。
+
+option('-c,--china',"描述....")
+**/
+
+//设置option
+program
+    .usage('[option],[arguments]')
+    .description("this is a programmer for generate a standard skeleton")
+    .version("0.1.1")
+    .option('-c,--china','chinese')
+    .option('-a,--USA','American')
+    .option('-g,--german','germany');
+var cmdVal;
+//设置参数
+program
+    .arguments("<cmd> [env]")
+    .action(function(cmd,env){
+        cmdVal = cmd;
+    });
+
+
+//设置commands
+program 
+    .command('install [name]','install a package')
+    .command('search [path] [key]','search a file');
+
+//开始解析
+program.parse(process.argv); 
+
+
+
+console.log(program.commands);
+
+ /**
+ 输出版本
+ *zhang[-bash]:node-CMD ericever$ node bin/cmd-1 -V
+  0.1.1
+  -------------------------------------------------
+ **/
+/***
+//一个参数
+        zhang[-bash]:node-CMD ericever$ node bin/cmd-1 -c
+        you are:
+        chinese
+        --------------------------------
+//多个参数
+        zhang[-bash]:node-CMD ericever$ node bin/cmd-1 -cag
+        you are:
+        chinese
+        american
+        germany
+        ----------------------------------
+**/
+
+//如果没有参数 ，show帮助信息
+if(!cmdVal){
+    console.error("no command given");
+    process.exit(1);
+}else{
+    console.log("arguments:" + cmdVal);
+}
+
+
+
+//上面定义的是options,不是参数，参数是 auguments
+if(program.args.length==0){
+    program.help();
+    process.exit(1);
+}else{
+    console.log("you are:"); 
+    if(program.china) console.log('chinese');
+    if(program.USA) console.log('american');
+    if(program.german) console.log('germany');  
+}
