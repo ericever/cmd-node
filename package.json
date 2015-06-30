@@ -1,10 +1,10 @@
 {
   "name": "ericever_cmd",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a node based CMD TOOL",
-  "main": "cmd-1",
+  "main": "bin/kai",
   "preferGlobal": "true",
-  "bin": {"kai": "bin/cmd-1"},
+  "bin": "bin/kai",
   "files":['bin'],    
   "repository":{
     "type":"git",
