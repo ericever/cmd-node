@@ -4,7 +4,8 @@
   "description": "a node based CMD TOOL",
   "main": "cmd-1",
   "preferGlobal": "true",
-  "bin": {"kai": "./bin/cmd-1"},
+  "bin": {"kai": "bin/cmd-1"},
+  "files":['bin'],    
   "repository":{
     "type":"git",
     "url":"https://github.com/ericever/cmd-node.git"   
